@@ -11,7 +11,7 @@ Hedef mimariler: IA-32, x86_64, ARM/ARM64 (AArch64) ve RISC-V. Eski Android 4.2.
 ## Yüksek seviye kararlar
 
 - Çekirdek modeli: NT-benzeri hibrit yaklaşım (monolitik çekirdek ve modüler sürücüler/servisler) değerlendirilecek.
-- Tek kaynak ağacı ve mimariye özel alt dizinler kullanılacak; x86 için `arch/x86/ia32` ve `arch/x86_64`, diğer mimariler için ayrı portlar planlanacak.
+- Tek kaynak ağacı ve mimariye özel alt dizinler kullanılacak: `arch/IA_32` ve `arch/x86_64` ile başlanacak; ARM, ARM64 ve RISC-V portları için ayrı dizinler daha sonra eklenecek.
 - HAL (Donanım Soyutlama Katmanı), CPU, kesme, zamanlayıcı, bellek ve PCI gibi donanım ayrıntılarını ortak çekirdek arayüzlerinin arkasında soyutlayacak.
 - x86 açılış yolları: legacy BIOS (GRUB/Multiboot) ve UEFI. ARM/ARM64 ve RISC-V için uygun firmware ve bootloader yolları ayrıca belirlenecek.
 
@@ -30,6 +30,10 @@ Hedef mimariler: IA-32, x86_64, ARM/ARM64 (AArch64) ve RISC-V. Eski Android 4.2.
 ## Kullanıcı uygulamaları ve tarayıcı fikri
 
 Web tarayıcısı çekirdeğin içine değil, işletim sisteminin kullanıcı alanına ait bir uygulama olarak ele alınacaktır. Feodor2'nin MyPal projesi ileride olası bir başlangıç noktası olarak araştırılabilir; ancak Windows için hazırlanmış ikili dosyaların Ladik'te doğrudan çalışacağı varsayılmamalıdır. Kaynak kodunu kullanma/port etme olasılığı, OS API'leri, grafik ve girdi altyapısı, ağ/TLS, derleme araç zinciri, bağımlılıklar ve upstream lisans koşulları doğrulandıktan sonra değerlendirilecektir. Ayrıntılar: [Tarayıcı stratejisi](BROWSER_STRATEGY.md).
+
+## Yapay zekâ fikri
+
+Diego, ileride geliştirilebilecek bir yapay zekâ asistanı/modeli için kullanılan proje adıdır. Hedeflenen ayırt edici nitelik, eski donanım ve eski/yeni yazılımlarla geriye dönük uyumluluğa özel önem vermektir. Diego'nun Ladik'e entegre edilmesi ileri sürüm fikridir; çekirdeğin bir parçası veya mevcut bir yetenek değildir. Modelin çalışma zamanı, kaynak tüketimi, gizlilik ve çevrimdışı çalışma gereksinimleri kullanıcı alanı mimarisi olgunlaştıktan sonra belirlenecek. Ayrıntılar: [Diego stratejisi](DIEGO_STRATEGY.md).
 
 ## Araç zinciri ve test
 

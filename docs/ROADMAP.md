@@ -6,6 +6,7 @@ Bu yol haritası taslaktır. Kilometre taşları, çalışan prototipler ve dona
 
 - README, GPL-3.0 lisans bilgisi, katkı rehberi, davranış kuralları ve GitHub şablonları.
 - Belgelerde geçici ad olarak “Kod Adı: Ladik” kullanılması; nihai ürün adının açık bırakılması.
+- `arch/IA_32` ve `arch/x86_64` mimari iskelet dizinlerini oluştur.
 
 ## Kilometre Taşı 1 — Araç zinciri ve CI
 
@@ -39,3 +40,9 @@ Bu yol haritası taslaktır. Kilometre taşları, çalışan prototipler ve dona
 
 - Kullanıcı alanı ve grafik yığını yeterince olgunlaştığında tarayıcı seçeneklerini incele.
 - MyPal kaynak kodunun/bağımlılıklarının Ladik'e port edilebilirliğini, lisansını ve güvenlik bakım gereksinimlerini araştır. Bu kilometre taşı bir entegrasyon taahhüdü değildir.
+
+## Kilometre Taşı 7 — Diego araştırması
+
+- Önce kullanıcı alanı, uygulama API'leri ve eski donanımlarda kaynak ölçümü altyapısı oluştur.
+- Diego için geriye dönük uyumluluk hedeflerini, çevrimdışı/çevrimiçi çalışma biçimlerini, model dağıtımını ve güvenlik sınırlarını tanımla.
+- Küçük, isteğe bağlı bir prototipi farklı mimari ve düşük bellekli cihazlarda kıyasla. Bu aşama Ladik çekirdeğine entegrasyon taahhüdü değildir.
