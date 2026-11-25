@@ -1,34 +1,45 @@
-MIMARLIK KARARLARI — Debrew 1.0
+# MİMARİ KARARLARI — Kod Adı: Ladik
 
-Durum: Draft
+Durum: Taslak
 
-Kapsam
+## Kapsam ve hedefler
 
-İlk hedefler: IA-32 (x86, 32-bit) ve x86_64 (64-bit).
-Amaç: küçük çekirdek boyutu, eski x86 donanımlarda (Pentium 4, Athlon 64) yüksek performans ve kararlılık.
-Yüksek seviye kararlar
+Kod Adı: Ladik, Debrew OS projesinin geçici kod adıdır; nihai ürün/dağıtım adı henüz kararlaştırılmamıştır. Amaç, eski x86 donanımları (özellikle Intel Pentium 4 ve AMD Athlon 64) gözeten, küçük ve taşınabilir bir işletim sistemi geliştirmektir.
 
-Kernel modeli: NT-benzeri hybrid (monolitik çekirdek + modüler sürücüler/servisler).
-Tek kaynak ağacı, mimariye özel alt dizinler: arch/x86/ia32 ve arch/x86_64.
-HAL (Donanım Soyutlama Katmanı): CPU, kesme, zamanlayıcı, bellek ve PCI soyutlamaları.
-Boot yolları: legacy BIOS/MBR (GRUB/Multiboot) ve UEFI (EFI stub) desteklenecek.
-Bellek modeli
+Hedef mimariler: IA-32, x86_64, ARM/ARM64 (AArch64) ve RISC-V. Eski Android 4.2.2 Jelly Bean ve 4.4.4 KitKat döneminden tabletler olası cihaz hedefleridir; destek, her cihazın açılış zinciri ve sürücü durumuna bağlıdır.
 
-IA-32: 4GB sınırını aşmak için PAE desteği planlanabilir.
-x86_64: dört seviyeli sayfa tablosu kullanımı (kanonik).
-Sürücü stratejisi
+## Yüksek seviye kararlar
 
-Önce emülatör-dostu sürücüler (virtio) ile test, sonra gerçek donanım sürücüleri: IDE/AHCI, e1000/rtl gibi.
-Eski donanımlar için IDE/ATA desteği öncelikli.
-Takım zinciri ve test
+- Çekirdek modeli: NT-benzeri hibrit yaklaşım (monolitik çekirdek ve modüler sürücüler/servisler) değerlendirilecek.
+- Tek kaynak ağacı ve mimariye özel alt dizinler kullanılacak; x86 için `arch/x86/ia32` ve `arch/x86_64`, diğer mimariler için ayrı portlar planlanacak.
+- HAL (Donanım Soyutlama Katmanı), CPU, kesme, zamanlayıcı, bellek ve PCI gibi donanım ayrıntılarını ortak çekirdek arayüzlerinin arkasında soyutlayacak.
+- x86 açılış yolları: legacy BIOS (GRUB/Multiboot) ve UEFI. ARM/ARM64 ve RISC-V için uygun firmware ve bootloader yolları ayrıca belirlenecek.
 
-Cross-compiler setleri (i686-elf, x86_64-elf) ve QEMU ile emülasyon tabanlı testler.
-Derlenebilir, tekrar üretilebilir toolchain yapılandırmalarını hedefle (ör. scripts veya container/Nix).
-Donanım hedefleri & optimizasyon
+## Bellek modeli
 
-Eski CPU'lara yönelik optimizasyon: uygun -march / tuning (i686, pentium4, athlon vb).
-Küçük kernel footprint, düşük çalışma zamanı yükü, minimal runtime sağlayacak tasarım.
-Notlar
+- IA-32: 4 GB fiziksel bellek sınırını aşma ihtiyacı için PAE değerlendirilecek.
+- x86_64: başlangıçta dört seviyeli sayfa tabloları hedeflenecek.
+- ARM ve RISC-V bellek yönetimi, ilgili mimarilerin sayfalama ve bellek koruma mekanizmalarına göre tasarlanacak.
 
-ARM/ARM64 ve RISC-V portları ayrı yol haritası aşamaları olacak.
-Tablet/SoC hedefleri için vendor dokümanları ve bootloader kilidi gibi gerçek dünya engelleri dikkate alınmalı.
+## Sürücü stratejisi
+
+- Önce QEMU gibi emülatörlerde test edilebilir sürücüler (ör. virtio), sonra gerçek donanım sürücüleri geliştirilecek.
+- Eski x86 donanımları için IDE/ATA desteği öncelikli; AHCI ve ağ aygıtları takip edecek.
+- Eski tabletlerde ekran, dokunmatik, Wi-Fi, GPU ve depolama gibi bileşenlerin desteği cihaz-özel olabilir. Vendor firmware/blobs ve kilitli bootloader engelleri araştırılmalı.
+
+## Kullanıcı uygulamaları ve tarayıcı fikri
+
+Web tarayıcısı çekirdeğin içine değil, işletim sisteminin kullanıcı alanına ait bir uygulama olarak ele alınacaktır. Feodor2'nin MyPal projesi ileride olası bir başlangıç noktası olarak araştırılabilir; ancak Windows için hazırlanmış ikili dosyaların Ladik'te doğrudan çalışacağı varsayılmamalıdır. Kaynak kodunu kullanma/port etme olasılığı, OS API'leri, grafik ve girdi altyapısı, ağ/TLS, derleme araç zinciri, bağımlılıklar ve upstream lisans koşulları doğrulandıktan sonra değerlendirilecektir. Ayrıntılar: [Tarayıcı stratejisi](BROWSER_STRATEGY.md).
+
+## Araç zinciri ve test
+
+- Mimariye uygun çapraz derleyiciler ve tekrar üretilebilir derleme yapılandırmaları kullanılacak.
+- QEMU ve uygun mimari emülatörleriyle otomatik testler hedeflenecek; donanım testleri ayrıca belgelenecek.
+
+## Eski CPU'lara yönelik optimizasyon
+
+Uygun `-march`/`-mtune` seçenekleri hedef bazında seçilecek. Ortak çekirdek ve kullanıcı alanı kodu, tüm desteklenen işlemcilerde çalışabilecek en düşük ortak özellik kümesini gözetmeli; işlemciye özel optimizasyonlar ayrı derlemeler veya çalışma zamanı algılaması gerektirebilir.
+
+## Notlar
+
+Bu kararlar taslaktır ve prototipler ile donanım denemeleri sonucunda güncellenecektir.

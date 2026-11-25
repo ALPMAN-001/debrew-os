@@ -1,23 +1,41 @@
-YOL HARITASI — Debrew 1.0.101
+# YOL HARİTASI — Kod Adı: Ladik
 
-Kilometre Noktası 0 — Proje iskelesi
+Bu yol haritası taslaktır. Kilometre taşları, çalışan prototipler ve donanım testleri geldikçe yeniden sıralanabilir.
 
-README, LICENSE (GPL-3.0), CONTRIBUTING, CODE_OF_CONDUCT, .github şablonları ve CI placeholder eklendi.
-Kilometre Taşı 1 — Araç Zinciri & CI
+## Kilometre Taşı 0 — Proje iskeleti
 
-IA-32 ve x86_64 için cross-toolchain tanımlanacak.
-CI: minimal kernel derlemesi ve headless QEMU smoke test (serial çıkışta basit doğrulama).
-Kilometre 2 — Minimal çekirdek iskeleti
+- README, GPL-3.0 lisans bilgisi, katkı rehberi, davranış kuralları ve GitHub şablonları.
+- Belgelerde geçici ad olarak “Kod Adı: Ladik” kullanılması; nihai ürün adının açık bırakılması.
 
-Boot → erken kernel init → serial/VGA çıktısı: "Hello, Debrew!"
-Temel PIT/APIC zamanlayıcısı, basit işbirlikçi zamanlayıcı.
-Kilometre Taşı 3 — Bellek ve Süreçler
+## Kilometre Taşı 1 — Araç zinciri ve CI
 
-Fiziksel page allocator, paging mekanizması.
-Context switch ve minimal userspace runtime.
-Kilometre 4 — Depolama ve Ağ Oluşturma
+- IA-32 ve x86_64 için çapraz derleme araç zinciri tanımlanacak.
+- CI: minimal çekirdek derlemesi ve seri çıktı doğrulamalı headless QEMU smoke testi.
+- Tekrarlanabilir derleme adımları belgelenecek.
 
-AHCI/IDE sürücüleri, virtio desteği (QEMU testleri), temel network stack.
-Kilometre Noktası 5 — Portlar ve cihaz desteği
+## Kilometre Taşı 2 — Minimal x86 çekirdek
 
-x86 stabil hale geldikten sonra ARM/ARM64 ve RISC-V planlama & portlama.
+- Boot → erken çekirdek başlatma → seri/VGA konsolunda “Hello, Ladik!”.
+- IA-32 ve x86_64 açılış yolları ile temel hata ayıklama desteği.
+
+## Kilometre Taşı 3 — Bellek, kesmeler ve süreçler
+
+- Fiziksel sayfa ayırıcı ve sayfalama.
+- Kesme yönetimi, temel zamanlayıcı ve ilk süreç/iş parçacığı altyapısı.
+- Kullanıcı alanı tasarımı ve ABI ayrıca belirlenecek.
+
+## Kilometre Taşı 4 — Depolama, ağ ve kullanıcı alanı
+
+- IDE/ATA ve virtio depolama; ardından AHCI ve temel ağ desteği.
+- Dosya sistemi, sistem çağrıları, grafik/girdi altyapısı ve uygulama çalışma zamanı için prototipler.
+
+## Kilometre Taşı 5 — Diğer mimariler
+
+- ARM64, RISC-V ve ARM 32-bit portları için emülatör veya geliştirici kartı hedefleri belirle.
+- Her port için boot zinciri, seri konsol ve bellek başlatma prototipi oluştur.
+- Eski Android tabletlerini cihaz bazında değerlendir; genel ARM desteğinin her tableti otomatik olarak desteklemediğini belgele.
+
+## Kilometre Taşı 6 — Uygulamalar ve tarayıcı araştırması
+
+- Kullanıcı alanı ve grafik yığını yeterince olgunlaştığında tarayıcı seçeneklerini incele.
+- MyPal kaynak kodunun/bağımlılıklarının Ladik'e port edilebilirliğini, lisansını ve güvenlik bakım gereksinimlerini araştır. Bu kilometre taşı bir entegrasyon taahhüdü değildir.
